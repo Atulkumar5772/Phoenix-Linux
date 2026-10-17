@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- 🌟 HEADER BANNER -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,24&height=220&section=header&text=Phoenix-Linux&fontSize=48&fontColor=ffffff&animation=twinkling&desc=Linux%20Kernel%20File%20Integrity%20Monitoring%20%26amp%3B%20Autonomous%20Self-Healing%20Daemon&descSize=18&descAlignY=70&descAlign=50" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,24&height=220&section=header&text=Phoenix-Linux&fontSize=48&fontColor=ffffff&animation=twinkling&desc=Linux%20Kernel%20File%20Integrity%20Monitoring%20%26%20Autonomous%20Self-Healing%20Daemon&descSize=18&descAlignY=70&descAlign=50" width="100%"/>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Language-C%2B%2B17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
@@ -52,83 +52,17 @@
 
 ## 🏗️ System Architecture & Subsystems
 
-```mermaid
-flowchart TD
-    subgraph Userspace ["🛡️ Userspace Application (Phoenix-Linux)"]
-        direction TB
-        Main["Main Daemon Controller\n(Signal Handler & CLI Loop)"]
-        
-        subgraph CoreEngine ["Core Security Subsystems"]
-            Watcher["Kernel Watcher Engine\n(inotify_init1 & poll() Dispatcher)"]
-            Verifier["Integrity Verification Engine\n(OpenSSL EVP SHA-256 + State Auditor)"]
-            Rollback["Autonomous Rollback Engine\n(Self-Healing & Infinite-Loop Suppress Lock)"]
-            Logger["ANSI Audit Logger & Telemetry\n(phoenix-audit.log + Real-Time Alerts)"]
-        end
-
-        Main --> Watcher
-        Main --> Verifier
-        Main --> Rollback
-        Main --> Logger
-    end
-
-    subgraph Kernel ["🐧 Linux Kernel Space"]
-        VFS["Virtual Filesystem (VFS)"]
-        InotifySubsys["inotify Subsystem\n(sys/inotify.h)"]
-        EventQueue[("Kernel Event Queue\n(IN_MODIFY / IN_DELETE / IN_ATTRIB)")]
-        
-        VFS --> InotifySubsys
-        InotifySubsys --> EventQueue
-    end
-
-    subgraph Storage ["💾 Filesystem & Baseline Vault Store"]
-        TargetDir[("Monitored Sensitive Directory\n(System Assets & Configs)")]
-        BaselineStore[("Isolated Snapshot Vault\n(.vault/ Repository)")]
-    end
-
-    TargetDir -.->|Filesystem I/O Activity| VFS
-    EventQueue ==>|Asynchronous Event Descriptor| Watcher
-    Watcher -->|Trigger Event Callback| Verifier
-    Verifier <-->|Verify Live Hash & Metadata| TargetDir
-    Verifier <-->|Compare with Baseline Snapshot| BaselineStore
-    Verifier -->|Hash Mismatch Detected| Rollback
-    Rollback ==>|Atomic Self-Healing Overwrite| TargetDir
-    Rollback -->|Emit Attack Telemetry| Logger
-```
+<div align="center">
+  <img src="docs/images/architecture.png" alt="Phoenix-Linux System Architecture" width="95%"/>
+</div>
 
 ---
 
 ## 🔄 Real-Time Threat Interception Lifecycle
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Attacker as 👤 Attacker / Malicious Process
-    participant FS as 📁 Protected Filesystem
-    participant Kernel as 🐧 Linux Kernel (inotify)
-    participant Phoenix as 🦅 Phoenix Daemon
-    participant Vault as 🔐 Vault & Verification Engine
-    participant Heal as 🛡️ Auto-Rollback Engine
-    participant Log as 📊 Audit Log
-
-    Phoenix->>Vault: Initialize Baseline Snapshot (SHA-256 + Permissions)
-    Vault->>FS: Scan Files, Compute Hashes, & Replicate Clean Snapshots
-    Phoenix->>Kernel: inotify_add_watch(TargetDir, IN_MODIFY | IN_DELETE | IN_ATTRIB)
-
-    Note over Phoenix,Kernel: Daemon enters non-blocking async poll() event loop
-
-    Attacker->>FS: Injects malicious bytes into sensitive file (echo "MALICIOUS" > file)
-    FS->>Kernel: VFS File Modification Triggered
-    Kernel->>Phoenix: inotify_event (IN_MODIFY)
-    Phoenix->>Vault: verifyIntegrity("target_file")
-    Vault->>FS: Compute Live SHA-256 Hash
-    Vault-->>Phoenix: Hash Mismatch == TRUE (Tampering Confirmed)
-    Phoenix->>Log: [CRITICAL] 🚨 Hash Mismatch on target_file
-    Phoenix->>Heal: autoHeal(target_file)
-    Heal->>Heal: Lock Path in Thread-Safe Suppress Table (Anti-Loop)
-    Heal->>FS: Atomically overwrite file with clean .vault/ snapshot
-    Heal->>FS: Reset POSIX permissions (chmod) & owner (chown)
-    Heal->>Log: [RESTORE] 🔥 Phoenix Resurrection Complete (< 1.2 ms)
-```
+<div align="center">
+  <img src="docs/images/workflow.png" alt="Phoenix-Linux Real-Time Workflow" width="95%"/>
+</div>
 
 ---
 

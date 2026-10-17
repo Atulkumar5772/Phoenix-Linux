@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" width="100%" height="100%">
+  <defs>
+    <!-- Background & Terminal Shadow Gradients -->
+    <linearGradient id="term-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0a1022"/>
+      <stop offset="100%" stop-color="#050813"/>
+    </linearGradient>
+
+    <!-- Header / Titlebar Gradient -->
+    <linearGradient id="header-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e172a"/>
+      <stop offset="100%" stop-color="#141f36"/>
+    </linearGradient>
+
+    <!-- Neon Accents -->
+    <linearGradient id="neon-fire" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff3b30"/>
+      <stop offset="50%" stop-color="#ff9500"/>
+      <stop offset="100%" stop-color="#00f3ff"/>
+    </linearGradient>
+
+    <linearGradient id="border-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f3ff" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#7c3aed" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ff3b30" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- Subtle Scanlines -->
+    <pattern id="scanlines" width="10" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="10" y2="0" stroke="#00f3ff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+
+    <!-- Glow Filter -->
+    <filter id="cyan-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="fire-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .mono {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Courier New', monospace;
+    }
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor {
+      animation: blink 0.9s infinite;
+    }
+    @keyframes sweep {
+      0% { transform: translateY(0); opacity: 0.1; }
+      50% { opacity: 0.35; }
+      100% { transform: translateY(440px); opacity: 0.1; }
+    }
+    .scanner {
+      animation: sweep 4s linear infinite;
+    }
+  </style>
+
+  <!-- Outer Window Shadow / Glow Container -->
+  <rect x="12" y="12" width="736" height="456" rx="16" fill="none" stroke="url(#border-glow)" stroke-width="2" filter="url(#cyan-glow)"/>
+  <rect x="14" y="14" width="732" height="452" rx="14" fill="url(#term-bg)"/>
+  <rect x="14" y="14" width="732" height="452" rx="14" fill="url(#scanlines)"/>
+
+  <!-- Scanning laser line -->
+  <line x1="16" y1="52" x2="744" y2="52" stroke="#00f3ff" stroke-width="1.5" opacity="0.3" class="scanner"/>
+
+  <!-- ================= WINDOW HEADER ================= -->
+  <path d="M 14 28 Q 14 14 28 14 L 732 14 Q 746 14 746 28 L 746 48 L 14 48 Z" fill="url(#header-grad)"/>
+  <line x1="14" y1="48" x2="746" y2="48" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Window Control Dots -->
+  <circle cx="36" cy="31" r="5.5" fill="#ff5f56"/>
+  <circle cx="54" cy="31" r="5.5" fill="#ffbd2e"/>
+  <circle cx="72" cy="31" r="5.5" fill="#27c93f"/>
+
+  <!-- Window Title & Breadcrumb -->
+  <text x="100" y="35" class="mono" font-size="12" font-weight="600" fill="#64748b">
+    <tspan fill="#38bdf8">root@rhel9</tspan><tspan fill="#64748b">: </tspan><tspan fill="#e2f1ff">~/phoenix-linux/bin/phoenix-linux --daemon</tspan>
+  </text>
+
+  <!-- Right Status Badge in Window Header -->
+  <rect x="635" y="22" width="95" height="18" rx="4" fill="#022c22" stroke="#10b981" stroke-width="1"/>
+  <circle cx="647" cy="31" r="3" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="656" y="34" class="mono" font-size="10" font-weight="700" fill="#34d399">PROTECTED</text>
+
+  <!-- ================= TERMINAL CONTENT ================= -->
+  <!-- ASCII & Logo Top Badge Area -->
+  <g transform="translate(34, 72)" class="mono">
+    
+    <!-- Big Cyber Banner Header -->
+    <text x="0" y="0" font-size="11" font-weight="bold" fill="#ff9500">
+===========================================================================
+    </text>
+    <text x="0" y="16" font-size="14" font-weight="900" fill="#00f3ff" filter="url(#cyan-glow)">
+  🔥 PHOENIX-LINUX  <tspan font-size="11" font-weight="500" fill="#94a3b8">|  Kernel inotify Self-Healing Security Daemon v1.0.0</tspan>
+    </text>
+    <text x="0" y="32" font-size="11" font-weight="bold" fill="#ff9500">
+===========================================================================
+    </text>
+
+    <!-- Init Log Lines -->
+    <text x="0" y="54" font-size="11.5">
+      <tspan fill="#64748b">[18:30:10]</tspan> <tspan fill="#38bdf8">[INFO]</tspan>     <tspan fill="#cbd5e1">Initializing Core Controller &amp; POSIX Signals...</tspan>
+    </text>
+    <text x="0" y="72" font-size="11.5">
+      <tspan fill="#64748b">[18:30:10]</tspan> <tspan fill="#38bdf8">[INFO]</tspan>     <tspan fill="#cbd5e1">Config loaded: </tspan><tspan fill="#f59e0b">config/phoenix.conf</tspan> <tspan fill="#64748b">[SHA-256 Vault: ACTIVE]</tspan>
+    </text>
+    <text x="0" y="90" font-size="11.5">
+      <tspan fill="#64748b">[18:30:10]</tspan> <tspan fill="#10b981">[SUCCESS]</tspan>  <tspan fill="#a7f3d0">Attached inotify Watcher to: </tspan><tspan fill="#38bdf8">/tmp/test_protected</tspan> <tspan fill="#64748b">[WD: 1]</tspan>
+    </text>
+    <text x="0" y="108" font-size="11.5">
+      <tspan fill="#64748b">[18:30:10]</tspan> <tspan fill="#10b981">[SUCCESS]</tspan>  <tspan fill="#a7f3d0">Generating clean cryptographic baseline snapshots in .vault/</tspan>
+    </text>
+    <text x="0" y="126" font-size="11.5">
+      <tspan fill="#64748b">[18:30:10]</tspan> <tspan fill="#10b981">[SUCCESS]</tspan>  <tspan fill="#00f3ff">Kernel poll() event loop online. Zero CPU overhead (0.0%).</tspan>
+    </text>
+
+    <!-- Divider Bar -->
+    <line x1="0" y1="142" x2="690" y2="142" stroke="#1e293b" stroke-width="1.2" stroke-dasharray="4 6"/>
+
+    <!-- ATTACK INTERCEPT 1: FILE TAMPERING -->
+    <rect x="-6" y="152" width="702" height="74" rx="6" fill="#1c070b" fill-opacity="0.8" stroke="#ef4444" stroke-width="1" stroke-opacity="0.6"/>
+    <text x="6" y="172" font-size="11.5">
+      <tspan fill="#64748b">[18:30:25]</tspan> <tspan fill="#ef4444" font-weight="bold">[CRITICAL] 🚨 KERNEL EVENT [IN_MODIFY]:</tspan> <tspan fill="#f87171">/tmp/test_protected/secret.txt</tspan>
+    </text>
+    <text x="24" y="190" font-size="11">
+      <tspan fill="#94a3b8">Mismatch : Baseline </tspan><tspan fill="#10b981">ef180f7b9c24e6...</tspan> <tspan fill="#94a3b8">!= Current </tspan><tspan fill="#ef4444">5405a5102d8471...</tspan>
+    </text>
+    <text x="24" y="210" font-size="12" font-weight="bold">
+      <tspan fill="#ff3b30">🔥 PHOENIX RESURRECTION : </tspan><tspan fill="#34d399">Authentic bytes overwritten via .vault/ in </tspan><tspan fill="#00f3ff" filter="url(#cyan-glow)">&lt; 1.2 ms</tspan><tspan fill="#34d399"> ✅</tspan>
+    </text>
+
+    <!-- ATTACK INTERCEPT 2: DELETION -->
+    <rect x="-6" y="236" width="702" height="74" rx="6" fill="#180e04" fill-opacity="0.8" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.6"/>
+    <text x="6" y="256" font-size="11.5">
+      <tspan fill="#64748b">[18:30:31]</tspan> <tspan fill="#f59e0b" font-weight="bold">[CRITICAL] 🚨 KERNEL EVENT [IN_DELETE]:</tspan> <tspan fill="#fcd34d">/tmp/test_protected/config.sys</tspan>
+    </text>
+    <text x="24" y="274" font-size="11">
+      <tspan fill="#94a3b8">Action   : Critical asset deleted by malicious process [PID 4821]</tspan>
+    </text>
+    <text x="24" y="294" font-size="12" font-weight="bold">
+      <tspan fill="#ff9500">🔥 PHOENIX RESURRECTION : </tspan><tspan fill="#34d399">File &amp; POSIX mode restored atomically from Vault! ✅</tspan>
+    </text>
+
+    <!-- Bottom Terminal Active Prompt -->
+    <g transform="translate(0, 342)">
+      <text x="0" y="0" font-size="12" font-weight="bold">
+        <tspan fill="#38bdf8">root@rhel9</tspan><tspan fill="#64748b">:~/phoenix-linux# </tspan><tspan fill="#ffffff">tail -f phoenix-audit.log</tspan>
+      </text>
+      <!-- Blinking Block Cursor -->
+      <rect x="365" y="-11" width="8" height="14" fill="#00f3ff" class="cursor" filter="url(#cyan-glow)"/>
+    </g>
+
+    <!-- Bottom Telemetry Chips -->
+    <g transform="translate(0, 368)">
+      <!-- Chip 1 -->
+      <rect x="0" y="0" width="160" height="22" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="8" y="15" font-size="10.5" fill="#94a3b8">Latency: <tspan fill="#00f3ff" font-weight="bold">&lt; 1.2 ms</tspan></text>
+
+      <!-- Chip 2 -->
+      <rect x="170" y="0" width="160" height="22" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="178" y="15" font-size="10.5" fill="#94a3b8">Defense Rate: <tspan fill="#10b981" font-weight="bold">100.0%</tspan></text>
+
+      <!-- Chip 3 -->
+      <rect x="340" y="0" width="170" height="22" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="348" y="15" font-size="10.5" fill="#94a3b8">Kernel Subsys: <tspan fill="#f59e0b" font-weight="bold">sys/inotify.h</tspan></text>
+
+      <!-- Chip 4 -->
+      <rect x="520" y="0" width="170" height="22" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="528" y="15" font-size="10.5" fill="#94a3b8">Crypto: <tspan fill="#38bdf8" font-weight="bold">OpenSSL SHA-256</tspan></text>
+    </g>
+
+  </g>
+</svg>
