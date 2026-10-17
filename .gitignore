@@ -1,0 +1,14 @@
+# Compiled Binaries & Objects
+bin/
+build/
+*.o
+*.out
+
+# Runtime Snapshot Vault & Logs
+.vault/
+*.log
+
+# Test Artifacts & OS junk
+test_protected/
+.DS_Store
+Thumbs.db

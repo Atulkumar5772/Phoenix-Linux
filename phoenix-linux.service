@@ -1,0 +1,21 @@
+[Unit]
+Description=Phoenix-Linux Kernel inotify File Integrity & Autonomous Self-Healing Daemon
+Documentation=https://github.com/your-username/phoenix-linux
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/mnt/e/Internship/phoenix-linux
+ExecStart=/mnt/e/Internship/phoenix-linux/bin/phoenix-linux --config /mnt/e/Internship/phoenix-linux/config/phoenix.conf
+Restart=always
+RestartSec=3s
+KillSignal=SIGTERM
+TimeoutStopSec=10s
+
+# Security Hardening
+ProtectHome=read-only
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
